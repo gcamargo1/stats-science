@@ -1,0 +1,30 @@
+# MkDocs template
+site_name: Stats Science
+repo_url: https://github.com/gcamargo1/stats-science
+repo_name: gcamargo1/stats-science
+edit_uri: tree/main/docs
+
+theme:
+  name: material
+
+markdown_extensions:
+  - attr_list
+  - admonition
+  - pymdownx.tasklist
+
+extra_css:
+  - stylesheets/extra.css
+
+watch:
+   - stats_science
+
+plugins:
+- macros
+- mkdocstrings:
+    handlers:
+      python:
+        paths: [stats_science]
+
+extra:
+  commands:
+    run: stats-science

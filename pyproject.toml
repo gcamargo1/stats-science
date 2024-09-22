@@ -1,27 +1,168 @@
 [project]
 name = "stats-science"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Add your description here"
 authors = [
     { name = "Gustavo Camargo", email = "" }
 ]
 dependencies = [
-    "mkdocs-material~=9.5.36",
-    "mkdocstrings-python~=1.11.1",
-    "pandas~=2.2.3",
+    "numpy~=2.0.1",
     "pytest~=8.3.3",
     "pytest-cov~=5.0.0",
+    "pytest-xdist~=3.6.1",
+    "mkdocs-material~=9.5.36",
+    "mkdocstrings~=0.26.1",
+    "mkdocstrings-python~=1.11.1",
+    "mkdocs-macros-plugin~=1.2.0",
+    "black~=24.8.0",
+    "taskipy~=1.13.0",
     "rpy2~=3.5.16",
     "scipy~=1.14.1",
-    "taskipy~=1.13.0",
 ]
 readme = "README.md"
-requires-python = ">= 3.8"
+requires-python = "~= 3.12"
 
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
+[tool.pdm.version]
+source = "scm"
+
+[tool.pyright]
+venvPath = "."          # rye installs the venv in the current dir
+venv = ".venv"          #       in a folder called `.venv`
+typeCheckingMode = "basic" # https://microsoft.github.io/pyright/#/comments?id=file-level-type-controls
+# strict = ["**/*.py"] use 'strict' checking on all files
+pythonVersion = "3.12"  # if library, specify the _lowest_ you supportjkhhk
+
+[tool.pytest.ini_options]
+pythonpath = "."
+addopts = "--doctest-modules"
+
+[tool.taskipy.tasks]
+docs = "mkdocs serve"
+test = "pytest -s -x --cov=stats_science -vv"
+coverage_report = "coverage html && open htmlcov/index.html"
+
+# Ruff config
+[tool.ruff]
+exclude = ["tests"]
+line-length = 88
+indent-width = 4
+
+[tool.ruff.lint]
+preview = true
+select = [
+    "D", # pycodestyle
+    "E",
+    "W",
+    # mccabe (code complexity)
+#    "C90",
+    # Pyflakes
+    "F",
+    # pep8-naming,
+    "N",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+    # Others
+    "YTT",
+    "ANN",
+    "S", # bandit
+    "FBT",
+    "A",
+    "COM",
+    "C4",
+    "DTZ",
+    "T10",
+    "FA",
+    "ISC",
+    "ICN",
+    "G",
+    "INP",
+    "PIE",
+    "T20", # print finder
+    "PYI",
+    "PT",
+    "Q",
+    "RSE",
+    "RET",
+    "SLF",
+    "SLOT",
+    "SIM",
+    "TID",
+    "TCH",
+    "INT",
+    "ARG",
+#    "PTH",  # change from strings to path obj
+    "TD",
+    "FIX",
+    "ERA",
+    "PD",
+    "PGH",
+    "PL",
+    "TRY",
+    "FLY",
+    "NPY",
+    "AIR",
+    "PERF",
+    "FURB",
+    "LOG",
+    "RUF"
+]
+ignore = ["ANN202",
+    "S101",
+    "RET504",
+    "PD901",
+    "PLR0912",
+    "PLR0913",
+    "ISC001", # conflicts with COM812
+    "FURB101", # not complain with open
+    "PLW1514", # not complain with open
+    "PTH123", # not complain with open
+    "TRY003",
+    "B023", # affects pandas lambda apply
+    "PD015", # let's use pd.merge
+    "COM812", # conflicts stuff
+    "FIX002", # asks to solve TODOs
+    "TD003", # asks for an issue link for TODOs
+    "ANN101", # depracated
+    "D107",
+    "D104",
+]
+fixable = ["ALL"]
+[tool.ruff.lint.flake8-import-conventions.aliases]
+altair = "alt"
+"matplotlib.pyplot" = "plt"
+numpy = "np"
+pandas = "pd"
+seaborn = "sns"
+
+[tool.ruff.lint.isort]
+# so it knows to group first-party stuff last
+known-first-party = ["environmental_biophysics"]
+
+[tool.ruff.lint.per-file-ignores]
+"**/{tests,docs,tools}/*" = ["PLR2004", "ANN201", "ANN001"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
 [tool.rye]
 managed = true
-dev-dependencies = []
+dev-dependencies = [
+    "pyright~=1.1.373",
+    "pytest~=8.3.2",
+]
+[tool.rye.scripts]
+fmt = "rye fmt"
+lint = "rye lint --fix"
+check = "pyright"
+test = "rye test"
+all = { chain = ["fmt", "lint", "check", "test"] }

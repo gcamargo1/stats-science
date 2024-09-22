@@ -1,0 +1,21 @@
+# https://rdrn.me/postmodern-python/
+name: push_pull_request
+on:
+  push:
+  pull_request:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Pyhon ${{matrix.python-version}}
+        uses: eifinger/setup-rye@v3
+      - run: rye pin 3.12         # pin your Python version
+      - run: rye fmt --check      # check formatting is correct
+      - run: rye lint             # and linting
+      - run: rye run test         # then run your tests!
+      - uses: jakebailey/pyright-action@v2
+      - run: rye run check        # typecheck too

@@ -1,0 +1,24 @@
+# Ref: https://www.youtube.com/watch?v=Q-YA_dA8C20&t=740s
+name: ci
+on:
+  push:
+    branches:
+      - master
+      - main
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+      - uses: actions/cache@v2
+        with:
+          key: ${{ github.ref }}
+          path: .cache
+      - run: pip install mkdocs-material mkdocstrings mkdocstrings-python mkdocs-macros-plugin
+      - run: pip install pillow cairosvg
+      - run: mkdocs gh-deploy --force
