@@ -1,0 +1,27 @@
+[project]
+name = "stats-science"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "Gustavo Camargo", email = "" }
+]
+dependencies = [
+    "mkdocs-material~=9.5.36",
+    "mkdocstrings-python~=1.11.1",
+    "pandas~=2.2.3",
+    "pytest~=8.3.3",
+    "pytest-cov~=5.0.0",
+    "rpy2~=3.5.16",
+    "scipy~=1.14.1",
+    "taskipy~=1.13.0",
+]
+readme = "README.md"
+requires-python = ">= 3.8"
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
