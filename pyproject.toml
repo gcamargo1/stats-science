@@ -18,6 +18,7 @@ dependencies = [
     "taskipy~=1.13.0",
     "rpy2~=3.5.16",
     "scipy~=1.14.1",
+    "pandas~=2.2.3",
 ]
 readme = "README.md"
 requires-python = "~= 3.12"
@@ -135,6 +136,8 @@ ignore = ["ANN202",
     "ANN101", # depracated
     "D107",
     "D104",
+    "PLR0914",
+  "T201"
 ]
 fixable = ["ALL"]
 [tool.ruff.lint.flake8-import-conventions.aliases]

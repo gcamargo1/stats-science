@@ -86,6 +86,7 @@ mypy-extensions==1.0.0
 nodeenv==1.9.1
     # via pyright
 numpy==2.0.2
+    # via pandas
     # via scipy
     # via stats-science
 packaging==24.1
@@ -95,6 +96,8 @@ packaging==24.1
     # via pytest
 paginate==0.5.7
     # via mkdocs-material
+pandas==2.2.3
+    # via stats-science
 pathspec==0.12.1
     # via black
     # via mkdocs
@@ -125,6 +128,9 @@ pytest-xdist==3.6.1
 python-dateutil==2.9.0.post0
     # via ghp-import
     # via mkdocs-macros-plugin
+    # via pandas
+pytz==2024.2
+    # via pandas
 pyyaml==6.0.2
     # via mkdocs
     # via mkdocs-get-deps
@@ -149,6 +155,8 @@ termcolor==2.4.0
     # via mkdocs-macros-plugin
 tomli==2.0.1
     # via taskipy
+tzdata==2024.1
+    # via pandas
 tzlocal==5.2
     # via rpy2
 urllib3==2.2.3

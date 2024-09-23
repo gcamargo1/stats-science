@@ -1,3 +1,4 @@
+tests/trash/
 # python generated files
 __pycache__/
 *.py[oc]
